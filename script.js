@@ -1,33 +1,25 @@
-const keys = document.querySelectorAll("button.key");
+const keys = document.querySelectorAll(`.key`);
 
-const boom = new Audio("sounds/boom.wav");
-const clap = new Audio("sounds/clap.wav");
-const hihat = new Audio("sounds/hihat.wav");
-const kick = new Audio("sounds/kick.wav");
-const snare = new Audio("sounds/snare.wav");
-const tom = new Audio("sounds/tom.wav");
+window.addEventListener("keydown", playSound);
 
-keys.forEach(function (key) {
-  key.addEventListener("click", function (e) {
-    switch (key.textContent) {
-      case "boom":
-        boom.play();
-        break;
-      case "clap":
-        clap.play();
-        break;
-      case "hihat":
-        hihat.play();
-        break;
-      case "kick":
-        kick.play();
-        break;
-      case "snare":
-        snare.play();
-        break;
-      case "tom":
-        tom.play();
-        break;
-    }
-  });
+keys.forEach((key) => {
+  key.addEventListener("transitionend", removeTransition);
 });
+
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+  if (!audio) return;
+
+  audio.currentTime = 0;
+  audio.play();
+
+  key.classList.add("playing");
+}
+
+function removeTransition(e) {
+  if (e.propertyName != "transform") return;
+
+  this.classList.remove("playing");
+}
