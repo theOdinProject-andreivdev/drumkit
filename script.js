@@ -3,7 +3,7 @@ const keys = document.querySelectorAll(`.key`);
 window.addEventListener("keydown", playSoundKeypress);
 
 keys.forEach((key) => {
-  key.addEventListener("click touch", playSoundClick);
+  key.addEventListener("touchstart", playSoundClick);
   key.addEventListener("transitionend", removeTransition);
 });
 
