@@ -3,6 +3,7 @@ const keys = document.querySelectorAll(`.key`);
 window.addEventListener("keydown", playSoundKeypress);
 
 keys.forEach((key) => {
+  key.addEventListener("click", playSoundClick);
   key.addEventListener("touchstart", playSoundClick);
   key.addEventListener("transitionend", removeTransition);
 });
@@ -20,6 +21,7 @@ function playSoundKeypress(e) {
 }
 
 function playSoundClick(e) {
+  e.preventDefault();
   const audio = document.querySelector(`audio[data-key="${this.dataset.key}"]`);
   const key = document.querySelector(`.key[data-key="${this.dataset.key}"]`);
 
